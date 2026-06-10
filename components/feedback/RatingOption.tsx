@@ -30,7 +30,7 @@ export function RatingOption({ label, selected, onSelect, color = 'amber' }: Pro
         w-full py-3 px-4 rounded-xl border-2 text-sm font-medium transition-all duration-200
         ${selected
           ? colorMap[color]
-          : `border-gray-200 bg-white text-gray-600 ${hoverMap[color]}`
+          : `border-gray-300bg-white text-gray-600 ${hoverMap[color]}`
         }
       `}
     >

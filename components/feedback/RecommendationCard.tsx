@@ -26,7 +26,7 @@ const COLOR_MAP: Record<Recommendation, string> = {
 
 export function RecommendationCard({ selected, onSelect }: Props) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+    <div className="bg-white rounded-3xl shadow-md border border-gray-300 p-5">
       <div className="flex items-start gap-3 mb-4">
         <span className="flex-shrink-0 w-7 h-7 rounded-full bg-violet-400 flex items-center justify-center text-xs font-bold text-white">
           ★
@@ -46,7 +46,7 @@ export function RecommendationCard({ selected, onSelect }: Props) {
               flex items-center gap-3
               ${selected === opt.value
                 ? COLOR_MAP[opt.value]
-                : 'border-gray-200 bg-white text-gray-600 hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700'
+                : 'border-gray-300bg-white text-gray-600 hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700'
               }
             `}
           >
