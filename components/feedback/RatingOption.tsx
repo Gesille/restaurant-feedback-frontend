@@ -27,12 +27,15 @@ export function RatingOption({ label, selected, onSelect, color = 'amber' }: Pro
       type="button"
       onClick={onSelect}
       className={`
-        w-full py-3 px-4 rounded-xl border-2 text-sm font-medium transition-all duration-200
-        ${selected
-          ? colorMap[color]
-          : `border-gray-300bg-white text-gray-600 ${hoverMap[color]}`
-        }
-      `}
+w-full py-4 px-4 rounded-2xl border text-sm font-semibold
+transition-all duration-200
+transform hover:scale-[1.01]
+
+${selected
+  ? colorMap[color]
+  : `border-gray-200 bg-gray-50 text-gray-700 ${hoverMap[color]}`
+}
+`}
     >
       {label}
     </button>

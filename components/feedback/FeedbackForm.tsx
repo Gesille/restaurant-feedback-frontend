@@ -1,11 +1,11 @@
 'use client';
 
-import { CustomerInfoCard }    from './CustomerInfoCard';
-import { QuestionCard }        from './QuestionCard';
-import { RecommendationCard }  from './RecommendationCard';
-import { CommentCard }         from './CommentCard';
-import { FEEDBACK_QUESTIONS }  from '@/config/questions.config';
-import { useFeedbackForm }     from '@/hooks/useFeedbackForm';
+import { CustomerInfoCard } from './CustomerInfoCard';
+import { QuestionCard } from './QuestionCard';
+import { RecommendationCard } from './RecommendationCard';
+import { CommentCard } from './CommentCard';
+import { FEEDBACK_QUESTIONS } from '@/config/questions.config';
+import { useFeedbackForm } from '@/hooks/useFeedbackForm';
 import { RestaurantInfo, Rating, Recommendation } from '@/types/feedback.types';
 
 interface Props {
@@ -24,84 +24,111 @@ export function FeedbackForm({ restaurant, onSuccess }: Props) {
     submit,
   } = useFeedbackForm(restaurant.id);
 
- async function handleSubmit() {
-  const ok = await submit();
-  if (ok) onSuccess();
-}
+  async function handleSubmit() {
+    const ok = await submit();
+    if (ok) onSuccess();
+  }
 
   return (
-  <div className="min-h-screen bg-white">
-    
-    {/* Header */}
-    <div className="bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 px-5 pt-12 pb-8 text-white shadow-md">
-      <p className="text-orange-100 text-xs font-medium uppercase tracking-widest mb-1">
-        Feedback Form
-      </p>
+    <div className="min-h-screen bg-white">
 
-      <h1 className="text-3xl font-bold mb-1">
-        {restaurant.name}
-      </h1>
+      {/* Header */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-orange-500 to-amber-500 text-white pb-10 pt-14 px-6 rounded-b-[35px] shadow-lg">
+        <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
 
-      <p className="text-orange-100 text-sm">
-        {restaurant.location}
-      </p>
-    </div>
+        <p className="uppercase tracking-[4px] text-orange-100 text-xs font-semibold mb-3">
+          Feedback Form
+        </p>
 
-    {/* Body */}
-    <div className="px-4 py-6 flex flex-col gap-5 max-w-lg mx-auto pb-10">
+        <h1 className="text-3xl font-bold leading-tight">
+          {restaurant.name}
+        </h1>
 
-      <CustomerInfoCard
-        customerName={form.customer_name}
-        waiterName={form.waiter_name}
-        onCustomerNameChange={(v) => setField('customer_name', v)}
-        onWaiterNameChange={(v) => setField('waiter_name', v)}
-      />
+        <p className="text-orange-100 mt-2 text-sm">
+          📍 {restaurant.location}
+        </p>
+      </div>
 
-      {FEEDBACK_QUESTIONS.map((q, i) => (
-        <QuestionCard
-          key={q.id}
-          index={i}
-          title={q.title}
-          options={q.options}
-          selected={form[q.id] as Rating | null}
-          onSelect={(val) => setRating(q.id, val)}
-        />
-      ))}
+      {/* Content */}
+      <div className="max-w-xl mx-auto px-4 py-6 flex flex-col gap-5">
 
-      <RecommendationCard
-        selected={form.recommendation}
-        onSelect={(val: Recommendation) => setRecommendation(val)}
-      />
-
-      <CommentCard
-        value={form.comment}
-        onChange={(v) => setField('comment', v)}
-      />
-
-      {submitError && (
-        <div className="bg-red-50 border border-red-200 rounded-2xl px-4 py-3 text-red-600 text-sm">
-          {submitError}
+        {/* Welcome Card */}
+        <div className="bg-orange-50 border border-orange-100 rounded-3xl p-5">
+          <h2 className="font-bold text-gray-800 text-lg mb-1">
+            We&apos;d love your feedback 💛
+          </h2>
+          <p className="text-gray-500 text-sm leading-relaxed">
+            Help us improve your dining experience by answering a few quick questions.
+          </p>
         </div>
-      )}
 
-      <button
-        type="button"
-        onClick={handleSubmit}
-        disabled={submitStatus === 'submitting'}
-        className="
-          w-full py-4 rounded-2xl
-          bg-gradient-to-r from-orange-500 to-amber-500
-          text-white font-bold text-base
-          shadow-lg hover:opacity-95
-          active:scale-95 transition-all duration-200
-          disabled:opacity-60 disabled:cursor-not-allowed
-        "
-      >
-        {submitStatus === 'submitting'
-          ? 'Submitting...'
-          : 'Submit Feedback'}
-      </button>
+        {/* Customer Info */}
+        <CustomerInfoCard
+          customerName={form.customer_name}
+          waiterName={form.waiter_name}
+          onCustomerNameChange={(v) => setField('customer_name', v)}
+          onWaiterNameChange={(v) => setField('waiter_name', v)}
+        />
+
+        {/* Questions */}
+        {FEEDBACK_QUESTIONS.map((q, i) => (
+          <QuestionCard
+            key={q.id}
+            index={i}
+            title={q.title}
+            options={q.options}
+            selected={form[q.id] as Rating | null}
+            onSelect={(val) => setRating(q.id, val)}
+          />
+        ))}
+
+        {/* Recommendation */}
+        <RecommendationCard
+          selected={form.recommendation}
+          onSelect={(val: Recommendation) =>
+            setRecommendation(val)
+          }
+        />
+
+        {/* Comment */}
+        <CommentCard
+          value={form.comment}
+          onChange={(v) => setField('comment', v)}
+        />
+
+        {/* Error */}
+        {submitError && (
+          <div className="bg-red-50 border border-red-200 rounded-2xl px-4 py-4 text-red-600 text-sm font-medium">
+            {submitError}
+          </div>
+        )}
+
+        {/* Submit Button */}
+        <button
+          type="button"
+          onClick={handleSubmit}
+          disabled={submitStatus === 'submitting'}
+          className="
+            w-full rounded-2xl py-4
+            bg-gradient-to-r from-orange-500 to-amber-500
+            text-white font-bold text-base
+            shadow-lg shadow-orange-200
+            hover:scale-[1.02]
+            active:scale-[0.98]
+            transition-all duration-300
+            disabled:opacity-50
+          "
+        >
+          {submitStatus === 'submitting'
+            ? 'Submitting...'
+            : 'Submit Feedback'}
+        </button>
+
+        <p className="text-center text-xs text-gray-400 pb-6">
+          Thank you for helping us improve 🙌
+        </p>
+      </div>
     </div>
-  </div>
-);
+  );
 }

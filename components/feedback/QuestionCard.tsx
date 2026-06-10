@@ -23,7 +23,7 @@ export function QuestionCard({ index, title, options, selected, onSelect, color 
   const resolvedColor = color ?? colors[index % colors.length];
 
   return (
-    <div className="bg-white rounded-3xl shadow-md border border-gray-300p-5">
+   <div className="bg-white rounded-3xl shadow-md border border-gray-100 p-5">
       <div className="flex items-start gap-3 mb-4">
         <span className={`
           flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white
