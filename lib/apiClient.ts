@@ -10,7 +10,12 @@ async function request<T>(
     ...options,
   });
 
-  const data: ApiResponse<T> = await res.json();
+  // const data: ApiResponse<T> = await res.json();
+  const text = await res.text();
+
+console.log('RAW RESPONSE:', text);
+
+const data: ApiResponse<T> = JSON.parse(text);
 
   if (!res.ok || !data.success) {
     throw new Error(data.message ?? 'Request failed');
