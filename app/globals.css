@@ -1,10 +1,11 @@
-
-@tailwind utilities;
+@import "tailwindcss";
 
 * {
   -webkit-tap-highlight-color: transparent;
 }
 
+html,
 body {
+  background: #ffffff;
   overscroll-behavior: none;
 }
