@@ -53,7 +53,7 @@ export const FEEDBACK_QUESTIONS: Question[] = [
   },
   {
     id: 'service_speed_rating',
-    title: 'How would you rate the speed and efficiency of the service?',
+    title: 'How would you rate the speed and efficiency of the service provided by your waiter/waitress?',
     options: [
       { label: 'Excellent', value: 4 },
       { label: 'Good',      value: 3 },
@@ -63,13 +63,13 @@ export const FEEDBACK_QUESTIONS: Question[] = [
   },
   {
     id: 'food_quality_rating',
-    title: 'How would you rate the quality of the food?',
+    title: 'Based on the service you received from your waiter/waitress, how likely are you to return to our restaurant or recommend us to others',
     options: [
-      { label: 'Excellent',     value: 5 },
-      { label: 'Good',          value: 4 },
-      { label: 'Average',       value: 3 },
-      { label: 'Below average', value: 2 },
-      { label: 'Poor',          value: 1 },
+      { label: 'Very Likely',     value: 5 },
+      { label: 'Likely',          value: 4 },
+      { label: 'Neutral',       value: 3 },
+      { label: 'Unlikely', value: 2 },
+      { label: 'Very Unlikely',          value: 1 },
     ],
   },
   {
