@@ -13,15 +13,29 @@ import {
 const INITIAL_STATE: FeedbackFormData = {
   customer_name:         '',
   waiter_name:           '',
-  friendliness_rating:   null,
-  attentiveness_rating:  null,
-  menu_knowledge_rating: null,
-  service_speed_rating:  null,
-  food_quality_rating:   null,
-  cleanliness_rating:    null,
-  overall_rating:        null,
-  recommendation:        null,
-  comment:               '',
+  // Waiter / Waitress
+  friendliness_rating:              null,
+  attentiveness_rating:             null,
+  menu_knowledge_rating:            null,
+  service_speed_rating:             null,
+  food_quality_rating:              null,
+  cleanliness_rating:               null,
+  overall_rating:                   null,
+  // Bartender
+  bartender_friendliness_rating:    null,
+  bartender_drink_knowledge_rating: null,
+  bartender_speed_rating:           null,
+  bartender_welcome_rating:         null,
+  bartender_overall_rating:         null,
+  // Hostess
+  hostess_friendliness_rating:      null,
+  hostess_seating_rating:           null,
+  hostess_welcome_rating:           null,
+  hostess_communication_rating:     null,
+  hostess_overall_rating:           null,
+  // Common
+  recommendation: null,
+  comment:        '',
 };
 
 type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error';
@@ -48,9 +62,10 @@ export function useFeedbackForm(restaurantId: number | null) {
 
   function validate(): string | null {
     if (!form.customer_name.trim()) return 'Please enter your name.';
-    if (!form.waiter_name.trim())   return 'Please enter your waiter\'s name.';
+    if (!form.waiter_name.trim())   return "Please enter your waiter's name.";
 
     const ratingFields: (keyof FeedbackFormData)[] = [
+      // Waiter / Waitress
       'friendliness_rating',
       'attentiveness_rating',
       'menu_knowledge_rating',
@@ -58,6 +73,18 @@ export function useFeedbackForm(restaurantId: number | null) {
       'food_quality_rating',
       'cleanliness_rating',
       'overall_rating',
+      // Bartender
+      'bartender_friendliness_rating',
+      'bartender_drink_knowledge_rating',
+      'bartender_speed_rating',
+      'bartender_welcome_rating',
+      'bartender_overall_rating',
+      // Hostess
+      'hostess_friendliness_rating',
+      'hostess_seating_rating',
+      'hostess_welcome_rating',
+      'hostess_communication_rating',
+      'hostess_overall_rating',
     ];
 
     for (const field of ratingFields) {
@@ -69,44 +96,57 @@ export function useFeedbackForm(restaurantId: number | null) {
     return null;
   }
 
-  // Change the return type of submit:
-async function submit(): Promise<boolean> {
-  if (!restaurantId) return false;
+  async function submit(): Promise<boolean> {
+    if (!restaurantId) return false;
 
-  const validationError = validate();
-  if (validationError) {
-    setError(validationError);
-    return false;
+    const validationError = validate();
+    if (validationError) {
+      setError(validationError);
+      return false;
+    }
+
+    setStatus('submitting');
+    setError(null);
+
+    try {
+      const payload: SubmitFeedbackPayload = {
+        restaurant_id:                    restaurantId,
+        customer_name:                    form.customer_name.trim(),
+        waiter_name:                      form.waiter_name.trim(),
+        // Waiter / Waitress
+        friendliness_rating:              form.friendliness_rating              as Rating,
+        attentiveness_rating:             form.attentiveness_rating             as Rating,
+        menu_knowledge_rating:            form.menu_knowledge_rating            as Rating,
+        service_speed_rating:             form.service_speed_rating             as Rating,
+        food_quality_rating:              form.food_quality_rating              as Rating,
+        cleanliness_rating:               form.cleanliness_rating               as Rating,
+        overall_rating:                   form.overall_rating                   as Rating,
+        // Bartender
+        bartender_friendliness_rating:    form.bartender_friendliness_rating    as Rating,
+        bartender_drink_knowledge_rating: form.bartender_drink_knowledge_rating as Rating,
+        bartender_speed_rating:           form.bartender_speed_rating           as Rating,
+        bartender_welcome_rating:         form.bartender_welcome_rating         as Rating,
+        bartender_overall_rating:         form.bartender_overall_rating         as Rating,
+        // Hostess
+        hostess_friendliness_rating:      form.hostess_friendliness_rating      as Rating,
+        hostess_seating_rating:           form.hostess_seating_rating           as Rating,
+        hostess_welcome_rating:           form.hostess_welcome_rating           as Rating,
+        hostess_communication_rating:     form.hostess_communication_rating     as Rating,
+        hostess_overall_rating:           form.hostess_overall_rating           as Rating,
+        // Common
+        recommendation: form.recommendation as Recommendation,
+        comment:        form.comment.trim(),
+      };
+
+      await feedbackService.submit(payload);
+      setStatus('success');
+      return true;
+    } catch (err: any) {
+      setError(err.message ?? 'Submission failed. Please try again.');
+      setStatus('error');
+      return false;
+    }
   }
-
-  setStatus('submitting');
-  setError(null);
-
-  try {
-    const payload: SubmitFeedbackPayload = {
-      restaurant_id:         restaurantId,
-      customer_name:         form.customer_name.trim(),
-      waiter_name:           form.waiter_name.trim(),
-      friendliness_rating:   form.friendliness_rating as Rating,
-      attentiveness_rating:  form.attentiveness_rating as Rating,
-      menu_knowledge_rating: form.menu_knowledge_rating as Rating,
-      service_speed_rating:  form.service_speed_rating as Rating,
-      food_quality_rating:   form.food_quality_rating as Rating,
-      cleanliness_rating:    form.cleanliness_rating as Rating,
-      overall_rating:        form.overall_rating as Rating,
-      recommendation:        form.recommendation as Recommendation,
-      comment:               form.comment.trim(),
-    };
-
-    await feedbackService.submit(payload);
-    setStatus('success');
-    return true;
-  } catch (err: any) {
-    setError(err.message ?? 'Submission failed. Please try again.');
-    setStatus('error');
-    return false;
-  }
-}
 
   function reset() {
     setForm(INITIAL_STATE);

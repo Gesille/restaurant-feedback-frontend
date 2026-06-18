@@ -71,16 +71,27 @@ export function FeedbackForm({ restaurant, onSuccess }: Props) {
           onWaiterNameChange={(v) => setField('waiter_name', v)}
         />
 
-        {/* Questions */}
+        {/* Questions — grouped by section */}
         {FEEDBACK_QUESTIONS.map((q, i) => (
-          <QuestionCard
-            key={q.id}
-            index={i}
-            title={q.title}
-            options={q.options}
-            selected={form[q.id] as Rating | null}
-            onSelect={(val) => setRating(q.id, val)}
-          />
+          <div key={q.id}>
+            {/* Section header whenever a new section starts */}
+            {q.section && (
+              <div className="flex items-center gap-3 mt-2 mb-1">
+                <div className="flex-1 h-px bg-gray-200" />
+                <span className="text-xs font-bold uppercase tracking-widest text-gray-400">
+                  {q.section}
+                </span>
+                <div className="flex-1 h-px bg-gray-200" />
+              </div>
+            )}
+            <QuestionCard
+              index={i}
+              title={q.title}
+              options={q.options}
+              selected={form[q.id] as Rating | null}
+              onSelect={(val) => setRating(q.id, val)}
+            />
+          </div>
         ))}
 
         {/* Recommendation */}
