@@ -75,7 +75,7 @@ export function FeedbackForm({ restaurant, onSuccess }: Props) {
         {/* Questions — grouped by section */}
         {FEEDBACK_QUESTIONS.map((q, i) => (
           <div key={q.id}>
-            {/* Section header whenever a new section starts */}
+            
             {q.section && (
               <div className="flex items-center gap-3 mt-2 mb-1">
                 <div className="flex-1 h-px bg-gray-200" />
