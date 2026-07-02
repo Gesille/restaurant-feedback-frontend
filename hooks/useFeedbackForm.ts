@@ -12,6 +12,7 @@ import {
 
 const INITIAL_STATE: FeedbackFormData = {
   customer_name:         '',
+  customer_email:        '',
   waiter_name:           '',
   // Waiter / Waitress
   friendliness_rating:              null,
@@ -59,10 +60,12 @@ export function useFeedbackForm(restaurantId: number | null) {
   function setRecommendation(value: Recommendation) {
     setField('recommendation', value);
   }
-
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   function validate(): string | null {
     if (!form.customer_name.trim()) return 'Please enter your name.';
     if (!form.waiter_name.trim())   return "Please enter your waiter's name.";
+    if (!form.customer_email.trim()) return 'Please enter your email.';
+    if (!EMAIL_RE.test(form.customer_email)) return 'Please enter a valid email address.';
 
     const ratingFields: (keyof FeedbackFormData)[] = [
       // Waiter / Waitress
@@ -112,6 +115,7 @@ export function useFeedbackForm(restaurantId: number | null) {
       const payload: SubmitFeedbackPayload = {
         restaurant_id:                    restaurantId,
         customer_name:                    form.customer_name.trim(),
+        customer_email:                   form.customer_email.trim().toLowerCase(),
         waiter_name:                      form.waiter_name.trim(),
         // Waiter / Waitress
         friendliness_rating:              form.friendliness_rating              as Rating,

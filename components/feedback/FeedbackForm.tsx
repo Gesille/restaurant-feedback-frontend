@@ -64,13 +64,14 @@ export function FeedbackForm({ restaurant, onSuccess }: Props) {
         </div>
 
         {/* Customer Info */}
-        <CustomerInfoCard
+       <CustomerInfoCard
           customerName={form.customer_name}
+          customerEmail={form.customer_email}
           waiterName={form.waiter_name}
           onCustomerNameChange={(v) => setField('customer_name', v)}
+          onCustomerEmailChange={(v) => setField('customer_email', v)}
           onWaiterNameChange={(v) => setField('waiter_name', v)}
         />
-
         {/* Questions — grouped by section */}
         {FEEDBACK_QUESTIONS.map((q, i) => (
           <div key={q.id}>

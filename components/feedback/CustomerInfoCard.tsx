@@ -2,19 +2,23 @@
 
 interface Props {
   customerName: string;
+  customerEmail: string;   // NEW
   waiterName: string;
   onCustomerNameChange: (val: string) => void;
+  onCustomerEmailChange: (val: string) => void;   // NEW
   onWaiterNameChange: (val: string) => void;
 }
 
 export function CustomerInfoCard({
   customerName,
+  customerEmail,
   waiterName,
   onCustomerNameChange,
+  onCustomerEmailChange,
   onWaiterNameChange,
 }: Props) {
   return (
-   <div className="bg-white rounded-3xl shadow-md border border-gray-100 p-5">
+    <div className="bg-white rounded-3xl shadow-md border border-gray-100 p-5">
       <h3 className="text-gray-700 font-semibold text-sm mb-4">Your Details</h3>
       <div className="flex flex-col gap-3">
         <div>
@@ -25,17 +29,38 @@ export function CustomerInfoCard({
             onChange={(e) => onCustomerNameChange(e.target.value)}
             placeholder="e.g. John Smith"
             className="
-w-full px-4 py-3 rounded-2xl
-border border-gray-200
-bg-gray-50
-text-gray-700
-placeholder-gray-400
-focus:outline-none
-focus:ring-4
-focus:ring-orange-100
-focus:border-orange-400
-transition
-"
+              w-full px-4 py-3 rounded-2xl
+              border border-gray-200
+              bg-gray-50
+              text-gray-700
+              placeholder-gray-400
+              focus:outline-none
+              focus:ring-4
+              focus:ring-orange-100
+              focus:border-orange-400
+              transition
+            "
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-gray-500 mb-1">Your Email</label>
+          <input
+            type="email"
+            value={customerEmail}
+            onChange={(e) => onCustomerEmailChange(e.target.value)}
+            placeholder="e.g. john@example.com"
+            className="
+              w-full px-4 py-3 rounded-2xl
+              border border-gray-200
+              bg-gray-50
+              text-gray-700
+              placeholder-gray-400
+              focus:outline-none
+              focus:ring-4
+              focus:ring-orange-100
+              focus:border-orange-400
+              transition
+            "
           />
         </div>
         <div>
@@ -45,7 +70,7 @@ transition
             value={waiterName}
             onChange={(e) => onWaiterNameChange(e.target.value)}
             placeholder="e.g. Maria"
-            className="w-full px-4 py-3 rounded-xl border-2 border-gray-300text-sm text-gray-700 placeholder-gray-300
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 text-sm text-gray-700 placeholder-gray-300
               focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-100 transition"
           />
         </div>

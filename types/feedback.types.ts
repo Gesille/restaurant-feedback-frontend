@@ -15,6 +15,7 @@ export interface RestaurantInfo {
 
 export interface FeedbackFormData {
   customer_name: string;
+  customer_email: string;   
   waiter_name: string;
   // Waiter / Waitress
   friendliness_rating:              Rating | null;
