@@ -68,9 +68,11 @@ export function FeedbackForm({ restaurant, onSuccess }: Props) {
           customerName={form.customer_name}
           customerEmail={form.customer_email}
           waiterName={form.waiter_name}
+          receiptNo={form.receipt_no} 
           onCustomerNameChange={(v) => setField('customer_name', v)}
           onCustomerEmailChange={(v) => setField('customer_email', v)}
           onWaiterNameChange={(v) => setField('waiter_name', v)}
+          onReceiptNoChange={(v) => setField('receipt_no', v)}
         />
         {/* Questions — grouped by section */}
         {FEEDBACK_QUESTIONS.map((q, i) => (

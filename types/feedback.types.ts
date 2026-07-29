@@ -17,6 +17,7 @@ export interface FeedbackFormData {
   customer_name: string;
   customer_email: string;   
   waiter_name: string;
+  receipt_no: string; 
   // Waiter / Waitress
   friendliness_rating:              Rating | null;
   attentiveness_rating:             Rating | null;

@@ -14,6 +14,7 @@ const INITIAL_STATE: FeedbackFormData = {
   customer_name:         '',
   customer_email:        '',
   waiter_name:           '',
+  receipt_no:            '',  
   // Waiter / Waitress
   friendliness_rating:              null,
   attentiveness_rating:             null,
@@ -64,6 +65,7 @@ export function useFeedbackForm(restaurantId: number | null) {
   function validate(): string | null {
     if (!form.customer_name.trim()) return 'Please enter your name.';
     if (!form.waiter_name.trim())   return "Please enter your waiter's name.";
+    if (!form.receipt_no.trim())   return 'Please enter your receipt number.';
     if (!form.customer_email.trim()) return 'Please enter your email.';
     if (!EMAIL_RE.test(form.customer_email)) return 'Please enter a valid email address.';
 
@@ -117,6 +119,7 @@ export function useFeedbackForm(restaurantId: number | null) {
         customer_name:                    form.customer_name.trim(),
         customer_email:                   form.customer_email.trim().toLowerCase(),
         waiter_name:                      form.waiter_name.trim(),
+        receipt_no:                       form.receipt_no.trim(),
         // Waiter / Waitress
         friendliness_rating:              form.friendliness_rating              as Rating,
         attentiveness_rating:             form.attentiveness_rating             as Rating,

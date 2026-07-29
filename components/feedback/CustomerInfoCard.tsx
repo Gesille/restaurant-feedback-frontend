@@ -2,20 +2,24 @@
 
 interface Props {
   customerName: string;
-  customerEmail: string;   // NEW
+  customerEmail: string;   
   waiterName: string;
+  receiptNo: string; 
   onCustomerNameChange: (val: string) => void;
-  onCustomerEmailChange: (val: string) => void;   // NEW
+  onCustomerEmailChange: (val: string) => void;   
   onWaiterNameChange: (val: string) => void;
+   onReceiptNoChange: (val: string) => void;  
 }
 
 export function CustomerInfoCard({
   customerName,
   customerEmail,
   waiterName,
+  receiptNo,
   onCustomerNameChange,
   onCustomerEmailChange,
-  onWaiterNameChange,
+  onWaiterNameChange, 
+  onReceiptNoChange,     
 }: Props) {
   return (
     <div className="bg-white rounded-3xl shadow-md border border-gray-100 p-5">
@@ -70,6 +74,17 @@ export function CustomerInfoCard({
             value={waiterName}
             onChange={(e) => onWaiterNameChange(e.target.value)}
             placeholder="e.g. Maria"
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 text-sm text-gray-700 placeholder-gray-300
+              focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-100 transition"
+          />
+        </div>
+         <div>
+          <label className="block text-xs font-medium text-gray-500 mb-1">Receipt Number</label>
+          <input
+            type="text"
+            value={receiptNo}
+            onChange={(e) => onReceiptNoChange(e.target.value)}
+            placeholder="e.g. INV-00231"
             className="w-full px-4 py-3 rounded-xl border-2 border-gray-300 text-sm text-gray-700 placeholder-gray-300
               focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-100 transition"
           />
